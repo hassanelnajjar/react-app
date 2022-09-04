@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+const Home = () => {
+  const [input, setInput] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = () => {
+    if (input) {
+      navigate("/page");
+    } else {
+      alert("Please enter a value");
+    }
+  };
+  return (
+    <>
+      <input
+        type="text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      />
+
+      <button onClick={handleSubmit}>Submit</button>
+    </>
+  );
+};
+
+const Page = () => {
+  return "Page";
+};
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Route path="/" element={<Home />}></Route>
+      <Route path="/page1" element={<Page />}></Route>
     </div>
   );
 }
