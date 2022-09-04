@@ -1,8 +1,8 @@
-import { Route, useNavigate } from "react-router-dom";
+import { Route, useNavigate, Routes, Navigate } from "react-router-dom";
 import { useState } from "react";
 
-const Home = () => {
-  const [input, setInput] = useState("");
+const Home = (props) => {
+  const { input, setInput } = props;
   const navigate = useNavigate();
 
   const handleSubmit = () => {
@@ -14,6 +14,7 @@ const Home = () => {
   };
   return (
     <>
+      <p>Home</p>
       <input
         type="text"
         value={input}
@@ -25,16 +26,34 @@ const Home = () => {
   );
 };
 
-const Page = () => {
-  return "Page";
+const Page = (props) => {
+  const { input } = props;
+  if (input) {
+    return (
+      <>
+        <p>Page</p>
+        <p>{input}</p>
+      </>
+    );
+  }
+  return <Navigate to="/" replace />;
 };
 
 function App() {
+  const [input, setInput] = useState("");
+
   return (
-    <div className="App">
-      <Route path="/" element={<Home />}></Route>
-      <Route path="/page1" element={<Page />}></Route>
-    </div>
+    <Routes>
+      <Route
+        path="/"
+        element={<Home input={input} setInput={setInput} />}
+      ></Route>
+
+      <Route
+        path="/page"
+        element={<Page input={input} setInput={setInput} />}
+      ></Route>
+    </Routes>
   );
 }
 
